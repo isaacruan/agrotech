@@ -50,7 +50,7 @@ void loop() {
   digitalWrite(rele,LOW);
 //SENSOR DE TEMPERATURA Y SUS RESPECTIVAS CONDICIONALES
   LM35();
-  if(x>60){
+  if(exttemp>60){
    digitalWrite (rele, HIGH);
   }
 //SENSOR DE HUMEDAD Y SUS RESPECTIVAS CONDICIONALES 
