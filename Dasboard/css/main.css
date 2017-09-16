@@ -1,0 +1,36 @@
+img{
+  max-width: 50%;
+}
+body{
+  font-family: 'Roboto';
+}
+.verde{
+  color: #7EF355;
+}
+.espacioarriba{
+  margin-top: 50px;
+}
+.espaciolados{
+  margin-right: 2em;
+}
+.opensans{
+  font-family: 'Open Sans', sans-serif;
+}
+.pacifico{
+  font-family: 'Pacifico', cursive;
+}
+.bitter{
+  font-family: 'Bitter', serif;
+}
+.letrasgrandes{
+  font-size: 5em;
+}
+.letrasmedianas{
+  font-size: 2em;
+}
+.rojo{
+  color: #FF404E;
+}
+.azul{
+  color: #1CA5B8;
+}
