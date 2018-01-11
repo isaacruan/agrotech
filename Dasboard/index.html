@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="Chart.js"></script>
+  <script src="utils.js"></script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -142,9 +144,134 @@
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i> Area Chart Example</div>
+          <i class="fa fa-area-chart"></i> Datos del Invernadero</div>
         <div class="card-body">
-          <canvas id="myAreaChart" width="100%" height="30"></canvas>
+          <canvas id="canvas"></canvas>
+          <script>
+            var config = {
+              type: 'line',
+              data: {
+
+                labels: [
+                  //datos aqui de la parte de abajo
+                ]
+                datasets: [{
+                  label: "Temperatura",
+                  backgroundColor: window.chartColors.red,
+                  borderColor: window.chartColor.red,
+                  data: [
+                    //datos de la grafica
+                  ],
+                  fill: false,
+                },{
+                  label: "Humedad",
+                  fill: false,
+                  backgroundColor: window.chartColors.blue;
+                  borderColor: window.chartColor.blue,
+                  data: [
+                    //datos de la grafica
+                  ]
+                }]
+              },
+              options:{
+                responsive: true,
+                title:{
+                  display: true,
+                  title: 'ChartDatos'
+                },
+                tooltip: {
+                  mode: 'index',
+                  intersect: false,
+                },
+                hover: {
+                  mode: 'neaest',
+                  intersect: false,
+                },
+                scales: {
+                    xAxes: [{
+                      display: true,
+                      sacaleLabel:{
+                        display: true,
+                        labelString: 'Fecha'
+                      }
+                    }],
+                    yAxes: [{
+                      display: true,
+                      sacaleLabel: {
+                          display: true,
+                          labelString: 'Datos'
+                      }
+                    }]
+                }
+
+              }
+
+            };
+
+            window.onload = function() {
+          var ctx = document.getElementById("canvas").getContext("2d");
+          window.myLine = new Chart(ctx, config);
+      };
+
+      document.getElementById('randomizeData').addEventListener('click', function() {
+          config.data.datasets.forEach(function(dataset) {
+              dataset.data = dataset.data.map(function() {
+                  return randomScalingFactor();
+              });
+
+          });
+
+          window.myLine.update();
+      });
+
+      var colorNames = Object.keys(window.chartColors);
+      document.getElementById('addDataset').addEventListener('click', function() {
+          var colorName = colorNames[config.data.datasets.length % colorNames.length];
+          var newColor = window.chartColors[colorName];
+          var newDataset = {
+              label: 'Dataset ' + config.data.datasets.length,
+              backgroundColor: newColor,
+              borderColor: newColor,
+              data: [],
+              fill: false
+          };
+
+          for (var index = 0; index < config.data.labels.length; ++index) {
+              newDataset.data.push(randomScalingFactor());
+          }
+
+          config.data.datasets.push(newDataset);
+          window.myLine.update();
+      });
+
+      document.getElementById('addData').addEventListener('click', function() {
+          if (config.data.datasets.length > 0) {
+              var month = MONTHS[config.data.labels.length % MONTHS.length];
+              config.data.labels.push(month);
+
+              config.data.datasets.forEach(function(dataset) {
+                  dataset.data.push(randomScalingFactor());
+              });
+
+              window.myLine.update();
+          }
+      });
+
+
+
+      document.getElementById('removeData').addEventListener('click', function() {
+          config.data.labels.splice(-1, 1); // remove the label first
+
+         config.data.datasets.forEach(function(dataset, datasetIndex) {
+              dataset.data.pop();
+          });
+
+          window.myLine.update();
+      });
+
+
+
+          </script>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
